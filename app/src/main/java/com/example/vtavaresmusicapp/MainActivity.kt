@@ -14,11 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import com.example.vtavaresmusicapp.navigation.Detail
 import com.example.vtavaresmusicapp.navigation.Home
+import com.example.vtavaresmusicapp.screens.AlbumDetailScreen
 import com.example.vtavaresmusicapp.screens.AlbumsScreen
 import com.example.vtavaresmusicapp.ui.theme.VTavaresMusicAppTheme
 import okhttp3.OkHttpClient
@@ -58,10 +60,9 @@ class MainActivity : ComponentActivity() {
                     composable<Home> {
                         AlbumsScreen(navController = navController)
                     }
-                    composable<Detail> {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Pantalla de detalle en construcción 🚧")
-                        }
+                    composable<Detail> { backStackEntry ->
+                        val detail = backStackEntry.toRoute<Detail>()
+                        AlbumDetailScreen(navController = navController, id = detail.id)
                     }
                 }
             }
